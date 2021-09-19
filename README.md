@@ -77,7 +77,7 @@ Then, in your browser:
 
 ![Browser Message - User/Password](imgs/browser_msg_5.png)
 
-Compare if they match.
+Compare if they match. [Nice collection of hints about openssl use](https://techglimpse.com/linux-openss-toolkit-example-commands/).
 
 # If you crazy enough to want to access the camera stream from outside a private network:
 Check [ngrok instructions](https://ngrok.com/docs#http-local-https) (untested because I'm not that crazy...).
