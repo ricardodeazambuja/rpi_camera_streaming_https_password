@@ -1,8 +1,11 @@
-"""Based on / using ideas from: 
+"""https://github.com/ricardodeazambuja/rpi_camera_streaming_https_password
+
+Based on / using ideas from: 
 - https://picamera.readthedocs.io/en/release-1.13/recipes2.html#web-streaming 
 - https://github.com/tianhuil/SimpleHTTPAuthServer/blob/master/SimpleHTTPAuthServer/__main__.py
 - https://stackoverflow.com/questions/19705785/python-3-simple-https-server
 """
+
 import io
 import picamera
 import logging
@@ -11,6 +14,7 @@ from threading import Condition
 from http import server
 import ssl
 import base64
+from hashlib import sha256
 import argparse
 
 # from PIL import Image, ImageDraw
@@ -49,7 +53,7 @@ class StreamingOutput(object):
         return self.buffer.write(buf)
 
 class StreamingHandler(server.BaseHTTPRequestHandler):
-    KEY = ''
+    HASH = ''
     def do_authhead(self):
         self.send_response(401)
         self.send_header('WWW-Authenticate', 'Basic realm=\"Test\"')
@@ -61,7 +65,10 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
             print("Not authorized!")
             self.do_authhead()
             self.wfile.write('No authorization header received!'.encode("utf-8"))
-        elif self.headers.get('Authorization') == 'Basic '+ str(self.KEY):
+            return
+        
+        received_user_pass = base64.b64decode(self.headers.get('Authorization')[6:]).decode("utf-8") +'\n'
+        if sha256(received_user_pass.encode('utf-8')).hexdigest() == str(self.HASH):
             print("Authorized!")
             if self.path == '/':
                 self.send_response(301)
@@ -145,10 +152,11 @@ def start_streaming():
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('key', help='username:password')
+    parser.add_argument('hash', help='echo username:password | sha256sum | cut -d " " -f1')
     args = parser.parse_args()
 
-    StreamingHandler.KEY = base64.b64encode(args.key.encode("utf-8")).decode('ascii')
+    StreamingHandler.HASH = args.hash
+    
 
     start_streaming()
 
