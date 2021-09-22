@@ -13,7 +13,8 @@ echo
 echo "Choose a user:pass and hash it:"
 echo "echo user:pass | sha256sum | cut -d " " -f1"
 echo "As an example, the output for 'user:pass' is 6f5fde15fa7df3fb7eb78d58425165120d5b0a95f8af68e73a638937bf76e52e"
-echo
+echo "===> Save in this script ONLY the final hash, not the user:pass, or the use of a hash is useless :D <=== "
+echo 
 
 CMD="sudo python rpi_camera_streaming_https_password.py 6f5fde15fa7df3fb7eb78d58425165120d5b0a95f8af68e73a638937bf76e52e"
 
