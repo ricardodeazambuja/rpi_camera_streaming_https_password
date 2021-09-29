@@ -82,6 +82,11 @@ Compare if they match. [Nice collection of hints about openssl use](https://tech
 # If you are crazy enough to want to access the camera stream from outside a private network:
 Check [ngrok instructions](https://ngrok.com/docs#http-local-https) (untested because I'm not that crazy...).
 
+# Useful links:
+* https://www.raspberrypi.org/documentation/computers/configuration.html
+* https://www.freebsd.org/cgi/man.cgi?wpa_supplicant.conf(5)
+* https://www.freebsd.org/cgi/man.cgi?query=wpa_passphrase
+
 # Based on / using ideas from: 
 - [Picamera Web streaming example](https://picamera.readthedocs.io/en/release-1.13/recipes2.html#web-streaming)
 - [SimpleHTTPAuthServer](https://github.com/tianhuil/SimpleHTTPAuthServer/)
